@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nitin Gupta — WMS Engineering Pitch</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #080A0F;
+    --surface:   #0E1118;
+    --card:      #131720;
+    --border:    #1E2330;
+    --c1:        #7B68EE; /* purple */
+    --c2:        #3ECFB2; /* teal */
+    --c3:        #F97316; /* orange */
+    --c4:        #4ADE80; /* green */
+    --text:      #EDF0F7;
+    --muted:     #7A8099;
+    --dim:       #3A3F55;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: .4;
+  }
+
+  /* ── WRAPPER ── */
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 72px 0 56px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--c1);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    flex: 1;
+    max-width: 48px;
+    height: 1px;
+    background: var(--c1);
+    opacity: .5;
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    margin-bottom: 14px;
+  }
+  .hero-name span { color: var(--c1); }
+
+  .hero-role {
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+
+  .hero-tagline {
+    font-size: clamp(13px, 1.8vw, 15px);
+    color: var(--muted);
+    max-width: 620px;
+    margin-bottom: 40px;
+    font-style: italic;
+  }
+
+  /* ── METRICS STRIP ── */
+  .metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .metric {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 20px;
+    min-width: 130px;
+    flex: 1;
+    transition: border-color .2s, transform .2s;
+  }
+  .metric:hover { transform: translateY(-2px); }
+  .metric:nth-child(1) { border-top: 2px solid var(--c1); }
+  .metric:nth-child(2) { border-top: 2px solid var(--c2); }
+  .metric:nth-child(3) { border-top: 2px solid var(--c4); }
+  .metric:nth-child(4) { border-top: 2px solid var(--c3); }
+  .metric:nth-child(5) { border-top: 2px solid #F472B6; }
+
+  .metric-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .metric:nth-child(1) .metric-val { color: var(--c1); }
+  .metric:nth-child(2) .metric-val { color: var(--c2); }
+  .metric:nth-child(3) .metric-val { color: var(--c4); }
+  .metric:nth-child(4) .metric-val { color: var(--c3); }
+  .metric:nth-child(5) .metric-val { color: #F472B6; }
+
+  .metric-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-weight: 500;
+  }
+
+  /* ── CONTACT ROW ── */
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--muted);
+    font-size: 13px;
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .contact-item:hover { color: var(--text); }
+  .contact-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--c1);
+    flex-shrink: 0;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section {
+    padding: 64px 0;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── CARDS GRID ── */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .25s, transform .25s;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card:nth-child(1)::before { background: var(--c1); }
+  .card:nth-child(2)::before { background: var(--c2); }
+  .card:nth-child(3)::before { background: var(--c3); }
+  .card:nth-child(4)::before { background: var(--c4); }
+
+  .card:hover {
+    transform: translateY(-3px);
+  }
+  .card:nth-child(1):hover { border-color: var(--c1); }
+  .card:nth-child(2):hover { border-color: var(--c2); }
+  .card:nth-child(3):hover { border-color: var(--c3); }
+  .card:nth-child(4):hover { border-color: var(--c4); }
+
+  /* card number */
+  .card-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .card:nth-child(1) .card-num { color: var(--c1); }
+  .card:nth-child(2) .card-num { color: var(--c2); }
+  .card:nth-child(3) .card-num { color: var(--c3); }
+  .card:nth-child(4) .card-num { color: var(--c4); }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 18px;
+    color: var(--text);
+  }
+
+  .card-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 16px;
+  }
+
+  .card-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .card:nth-child(1) .card-section-label { color: var(--c1); }
+  .card:nth-child(2) .card-section-label { color: var(--c2); }
+  .card:nth-child(3) .card-section-label { color: var(--c3); }
+  .card:nth-child(4) .card-section-label { color: var(--c4); }
+
+  .card-problem {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+
+  .solution-list {
+    list-style: none;
+    margin-bottom: 20px;
+  }
+  .solution-list li {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.55;
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 7px;
+  }
+  .solution-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+  }
+  .card:nth-child(1) .solution-list li::before { background: var(--c1); }
+  .card:nth-child(2) .solution-list li::before { background: var(--c2); }
+  .card:nth-child(3) .solution-list li::before { background: var(--c3); }
+  .card:nth-child(4) .solution-list li::before { background: var(--c4); }
+
+  /* metric box */
+  .card-metric {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .card-metric-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .card:nth-child(1) .card-metric-val { color: var(--c1); }
+  .card:nth-child(2) .card-metric-val { color: var(--c2); }
+  .card:nth-child(3) .card-metric-val { color: var(--c3); }
+  .card:nth-child(4) .card-metric-val { color: var(--c4); }
+
+  .card-metric-right {
+    text-align: right;
+  }
+  .card-metric-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    display: block;
+  }
+  .card-metric-extra {
+    font-size: 11px;
+    font-style: italic;
+    margin-top: 2px;
+    display: block;
+  }
+  .card:nth-child(1) .card-metric-extra { color: var(--c1); }
+  .card:nth-child(2) .card-metric-extra { color: var(--c2); }
+  .card:nth-child(3) .card-metric-extra { color: var(--c3); }
+  .card:nth-child(4) .card-metric-extra { color: var(--c4); }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .footer-right {
+    font-size: 12px;
+    color: var(--dim);
+  }
+
+  /* ── FADE IN ANIMATION ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-name    { animation: fadeUp .6s ease both; }
+  .hero-role    { animation: fadeUp .6s .1s ease both; }
+  .hero-tagline { animation: fadeUp .6s .15s ease both; }
+  .metrics      { animation: fadeUp .6s .2s ease both; }
+  .contact-row  { animation: fadeUp .6s .25s ease both; }
+  .card { animation: fadeUp .5s ease both; }
+  .card:nth-child(1) { animation-delay: .1s; }
+  .card:nth-child(2) { animation-delay: .18s; }
+  .card:nth-child(3) { animation-delay: .26s; }
+  .card:nth-child(4) { animation-delay: .34s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero { padding: 48px 0 40px; }
+    .cards { grid-template-columns: 1fr; }
+    .metric { min-width: 100px; }
+    .section { padding: 48px 0; }
+    .footer { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (max-width: 480px) {
+    .metrics { flex-direction: column; }
+    .metric { min-width: unset; }
+    .card { padding: 20px; }
+    .card-metric { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .card-metric-right { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-eyebrow">WMS Engineering Pitch</div>
+    <h1 class="hero-name">Nitin <span>Gupta</span></h1>
+    <p class="hero-role">Software Development Engineer — Backend Engineer &nbsp;·&nbsp; Purplle.com &nbsp;·&nbsp; 4+ Years</p>
+    <p class="hero-tagline">Built DC OPS from scratch — a custom Warehouse Management System processing 500,000+ inventory units daily across 20+ DC, PAN India.</p>
+
+    <!-- Metrics -->
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-val">500K+</div>
+        <div class="metric-label">Daily Inventory Units</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">1</div>
+        <div class="metric-label">DC, Mumbai</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">3x</div>
+        <div class="metric-label">Throughput Increase</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">10–15%</div>
+        <div class="metric-label">Fill Rate Improvement</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">2K+</div>
+        <div class="metric-label">Boxes Unblocked</div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="contact-row">
+      <a href="mailto:nitingupta03012000@gmail.com" class="contact-item">
+        <span class="contact-dot"></span>nitingupta03012000@gmail.com
+      </a>
+      <a href="tel:+916375021369" class="contact-item">
+        <span class="contact-dot"></span>+91 63750-21369
+      </a>
+      <a href="https://www.linkedin.com/in/nitin-gupta-303973170/" target="_blank" class="contact-item">
+        <span class="contact-dot"></span>linkedin.com/in/nitin-gupta-303973170
+      </a>
+      <span class="contact-item">
+        <span class="contact-dot"></span>Open to Pan-India Relocation
+      </span>
+    </div>
+  </header>
+
+  <!-- CHALLENGES -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-label">Engineering Challenges &amp; Solutions</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="cards">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="card-num">Challenge 01</div>
+        <h2 class="card-title">Inventory Fill Rate Optimization</h2>
+        <div class="card-divider"></div>
+
+        <div class="card-section-label">The Problem</div>
+        <p class="card-problem">Corrupted Phase 1 picklists left orphaned box reservations — system blocked physically available stock, directly hurting fill rate and causing revenue loss.</p>
+
+        <div class="card-section-label">My Solution</div>
+        <ul class="solution-list">
+          <li>Cleared all corrupted picklist data from DB</li>
+          <li>Built async Safety Net Cron Job for ongoing protection</li>
+          <li>Cron scans for stalled orphaned box blockings</li>
+          <li>Auto-releases stale blocks</li>
+        </ul>
+
+        <div class="card-metric">
+          <div class="card-metric-val">10–15%</div>
+          <div class="card-metric-right">
+            <span class="card-metric-label">Fill Rate Improvement</span>
+            <span class="card-metric-extra">+ 2K+ boxes unblocked</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="card-num">Challenge 02</div>
+        <h2 class="card-title">Real-Time Box Suggestions</h2>
+        <div class="card-divider"></div>
+
+        <div class="card-section-label">The Problem</div>
+        <p class="card-problem">Pre-generated suggestions were stale by Next day. Pickers arrived at empty shelves, wasted time searching, and manually counted loose items.</p>
+
+        <div class="card-section-label">My Solution</div>
+        <ul class="solution-list">
+          <li>Decoupled picking list generation from box suggestion</li>
+          <li>Box suggestion fires in real-time at the rack</li>
+          <li>Algorithm evaluates live stock — fullest box first</li>
+          <li>Full-box picking eliminates manual counting — picker grabs and moves on</li>
+        </ul>
+
+        <div class="card-metric">
+          <div class="card-metric-val">+22%</div>
+          <div class="card-metric-right">
+            <span class="card-metric-label">Box Picking per 1K Units</span>
+            <span class="card-metric-extra">+ 15% picker efficiency gain</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="card-num">Challenge 03</div>
+        <h2 class="card-title">Order Starvation (Rack-Level Blocking)</h2>
+        <div class="card-divider"></div>
+
+        <div class="card-section-label">The Problem</div>
+        <p class="card-problem">Orders acted as runaway processes — continuously pulling fresh suggestions, stealing stock earmarked for other orders. No geographic boundary on inventory claiming.</p>
+
+        <div class="card-section-label">My Solution</div>
+        <ul class="solution-list">
+          <li>Rack-Level Blocking: locks SKU + batch qty to specific rack</li>
+          <li>Ring-fences stock so no other order can claim from that rack</li>
+          <li>Smart Over-Picking: worker picks extra unlocked nearby stock</li>
+          <li>System auto-adjusts all future pick paths accordingly</li>
+        </ul>
+
+        <div class="card-metric">
+          <div class="card-metric-val">Zero</div>
+          <div class="card-metric-right">
+            <span class="card-metric-label">Starvation Events</span>
+            <span class="card-metric-extra">+ Clear per-order stock separation</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <div class="card-num">Challenge 04</div>
+        <h2 class="card-title">High-Throughput Picklist Engine</h2>
+        <div class="card-divider"></div>
+
+        <div class="card-section-label">The Problem</div>
+        <p class="card-problem">One DB query per item per order — SQL N+1 problem. Concurrent operators fired thousands of DB requests, causing lock-up. Picklists took minutes instead of seconds.</p>
+
+        <div class="card-section-label">My Solution</div>
+        <ul class="solution-list">
+          <li>Bulk Precomputation: fetch all SKU batch data in single indexed read</li>
+          <li>Compute all picklists in memory, commit in one bulk insert</li>
+          <li>One Kafka topic per warehouse for parallel processing across warehouses</li>
+          <li>Sequential consumer per topic ensures zero conflicts within a warehouse</li>
+        </ul>
+
+        <div class="card-metric">
+          <div class="card-metric-val">3x</div>
+          <div class="card-metric-right">
+            <span class="card-metric-label">Throughput Under Peak Load</span>
+            <span class="card-metric-extra">+ Zero DB lock contention</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span class="footer-name">Nitin Gupta &nbsp;·&nbsp; Backend Engineer</span>
+    <span class="footer-right">Open to Pan-India Relocation</span>
+  </footer>
+
+</div>
+</body>
+</html>
